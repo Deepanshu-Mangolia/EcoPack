@@ -215,6 +215,8 @@ nav {
     max-width: 1240px;
     margin: 0 auto;
     padding: 10px 0;
+    position: relative;
+    z-index: 5;
 }
 
 .main-nav {
@@ -222,6 +224,56 @@ nav {
     gap: 28px;
     justify-content: flex-end;
     flex-wrap: wrap;
+}
+
+.nav-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hamburger {
+    display: none;
+    margin-left: auto;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 6;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.skip-nav {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip-nav:focus {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: auto;
+    height: auto;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    z-index: 10;
+    border-radius: 6px;
 }
 
 .logo {
