@@ -124,7 +124,10 @@
     }
 
     h1 {
-        font-size: 190%;
+        font-size: 170%;
+        line-height: 1.15;
+        letter-spacing: 0.5px;
+        word-spacing: 2px;
     }
 
     .meals-showcase {
@@ -144,6 +147,7 @@
     .hero-subtitle {
         max-width: 100%;
         font-size: 0.95rem;
+        line-height: 1.45;
     }
 
     .hero-text-box .btn {
@@ -152,8 +156,62 @@
     }
 
     .main-nav {
-        justify-content: center;
-        gap: 18px;
+        position: absolute;
+        right: 1.5rem;
+        left: 1.5rem;
+        top: 70px;
+        flex-direction: column;
+        gap: 14px;
+        background: rgba(19, 24, 20, 0.98);
+        padding: 20px 24px;
+        border-radius: 18px;
+        align-items: flex-start;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-12px) scale(0.98);
+        transition: opacity 200ms ease, transform 200ms ease;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav li a:link,
+    .main-nav li a:visited {
+        color: #fff;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+    }
+
+    .main-nav li span {
+        display: none;
+    }
+
+    .hamburger {
+        display: inline-flex;
+        position: absolute;
+        right: 1.5rem;
+        top: 16px;
+        background: rgba(19, 24, 20, 0.55);
+        border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .nav-toggle:checked ~ .main-nav {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .nav-toggle:checked + .hamburger span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .nav-toggle:checked + .hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle:checked + .hamburger span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
     }
 
     .features-text .long-copy {
@@ -258,7 +316,10 @@
 /* Small phones */
 @media only screen and (max-width: 480px) {
     h1 {
-        font-size: 165%;
+        font-size: 145%;
+        line-height: 1.18;
+        letter-spacing: 0.3px;
+        word-spacing: 1px;
     }
 
     .hero-text-box {
@@ -268,10 +329,20 @@
     .hero-text-box .btn {
         display: block;
         margin: 12px auto 0;
-        width: max-content;
+        width: min(90%, 240px);
+        text-align: center;
     }
 
     header {
         background-attachment: scroll;
+    }
+
+    .hamburger {
+        right: 1rem;
+    }
+
+    .main-nav {
+        right: 1rem;
+        left: 1rem;
     }
 }
