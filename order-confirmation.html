@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Order confirmation for eco-friendly packaging." />
+  <link rel="stylesheet" href="market.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <title>Order Confirmation</title>
+</head>
+
+<body class="checkout-page">
+  <header class="checkout-hero">
+    <nav>
+      <ul class="main-nav">
+        <li><a href="index.html">home</a><span></span></li>
+        <li><a href="index.html#package">Packaging</a><span></span></li>
+        <li><a href="index.html#products">products</a><span></span></li>
+        <li><a href="market.html">Marketplace</a><span></span></li>
+        <li><a href="#contact">Contact Us</a><span></span></li>
+      </ul>
+    </nav>
+    <div class="hero-text-box">
+      <p class="quote">Thank you for your order</p>
+      <p class="hero-subtitle">We are preparing your eco-friendly packaging.</p>
+    </div>
+  </header>
+
+  <main class="checkout-wrapper confirmation-wrapper">
+    <section class="confirmation-card">
+      <h2 id="confirmationTitle">Payment Successful</h2>
+      <p id="confirmationMessage">Your order has been received. A confirmation email will follow shortly.</p>
+
+      <div class="confirmation-details">
+        <div>
+          <p class="summary-label">Order ID</p>
+          <p id="orderId">--</p>
+        </div>
+        <div>
+          <p class="summary-label">Product</p>
+          <p id="product">--</p>
+        </div>
+        <div>
+          <p class="summary-label">Amount</p>
+          <p id="amount">₹0</p>
+        </div>
+        <div>
+          <p class="summary-label">Status</p>
+          <p id="status">Pending</p>
+        </div>
+      </div>
+
+      <a class="buy-link" href="market.html">Back to Marketplace</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" id="contact">
+      <div class="footer-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#package">Packaging</a></li>
+          <li><a href="index.html#products">Product</a></li>
+          <li><a href="market.html">Marketplace</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="social-links">
+        <a href="https://www.google.com/intl/en-GB/gmail/about/"><i class="fab fa-google-plus-square"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("orderId") || "--";
+    const product = params.get("product") || "--";
+    const amount = params.get("amount") || "0";
+    const status = params.get("status") || "Pending";
+
+    const statusMap = {
+      success: "Payment Successful",
+      failed: "Payment Failed",
+      pending: "Payment Pending"
+    };
+
+    const title = statusMap[status.toLowerCase?.()] || "Order Update";
+
+    document.getElementById("confirmationTitle").textContent = title;
+    document.getElementById("orderId").textContent = orderId;
+    document.getElementById("product").textContent = product;
+    document.getElementById("amount").textContent = `₹${amount}`;
+    document.getElementById("status").textContent = status;
+
+    const message = status === "failed"
+      ? "Payment did not go through. Please try again or contact support."
+      : "Your order has been received. A confirmation email will follow shortly.";
+    document.getElementById("confirmationMessage").textContent = message;
+  </script>
+</body>
+
+</html>
