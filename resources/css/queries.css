@@ -123,6 +123,10 @@
         font-size: 110%;
     }
 
+    h1 {
+        font-size: 190%;
+    }
+
     .meals-showcase {
         display: none;
     }
@@ -133,6 +137,18 @@
 
     .hero-text-box {
         text-align: center;
+        padding: 0 1.25rem;
+        width: 100%;
+    }
+
+    .hero-subtitle {
+        max-width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .hero-text-box .btn {
+        display: inline-block;
+        margin: 10px 8px 0;
     }
 
     .main-nav {
@@ -240,4 +256,22 @@
 }
 
 /* Small phones */
-@media only screen and (max-width: 480px) {}
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 165%;
+    }
+
+    .hero-text-box {
+        top: 52%;
+    }
+
+    .hero-text-box .btn {
+        display: block;
+        margin: 12px auto 0;
+        width: max-content;
+    }
+
+    header {
+        background-attachment: scroll;
+    }
+}
