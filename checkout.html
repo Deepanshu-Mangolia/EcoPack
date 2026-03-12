@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout for eco-friendly packaging purchases." />
+  <link rel="stylesheet" href="market.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <title>Checkout | Eco-Friendly Marketplace</title>
+</head>
+
+<body class="checkout-page">
+  <header class="checkout-hero">
+    <nav>
+      <ul class="main-nav">
+        <li><a href="index.html">home</a><span></span></li>
+        <li><a href="index.html#package">Packaging</a><span></span></li>
+        <li><a href="index.html#products">products</a><span></span></li>
+        <li><a href="market.html">Marketplace</a><span></span></li>
+        <li><a href="#contact">Contact Us</a><span></span></li>
+      </ul>
+    </nav>
+    <div class="hero-text-box">
+      <p class="quote">Secure checkout</p>
+      <p class="hero-subtitle">Complete your order in minutes and choose a payment method.</p>
+    </div>
+  </header>
+
+  <main class="checkout-wrapper">
+    <section class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="summary-card">
+        <img id="productImage" src="resources/img/CustomprintBags_250x250_2x_1.jpg" alt="Selected product" />
+        <div>
+          <h3 id="productName">Customizable paper bag</h3>
+          <p class="summary-price">Price: ₹<span id="productPrice">9</span>.00</p>
+          <label for="quantity">Quantity</label>
+          <input id="quantity" name="quantity" type="number" min="1" value="1" />
+          <p class="summary-total">Total: ₹<span id="totalPrice">9</span>.00</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="checkout-form">
+      <h2>Customer Details</h2>
+      <form id="checkoutForm" action="#" method="post">
+        <label for="fullName">Full name</label>
+        <input id="fullName" name="fullName" type="text" placeholder="Your full name" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="Phone number" required />
+
+        <label for="address">Delivery address</label>
+        <textarea id="address" name="address" rows="4" placeholder="Street, city, state, ZIP" required></textarea>
+
+        <label for="notes">Order notes (optional)</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Delivery instructions"></textarea>
+
+        <h2 class="payment-title">Payment Method</h2>
+        <div class="payment-options">
+          <label class="payment-card">
+            <input type="radio" name="payment" value="offline" checked />
+            <span>Pay on delivery (offline)</span>
+          </label>
+        </div>
+
+        <button type="submit" class="buy-link">Place Order</button>
+        <p class="payment-note" id="paymentNote">We will confirm your order and contact you for payment.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" id="contact">
+      <div class="footer-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#package">Packaging</a></li>
+          <li><a href="index.html#products">Product</a></li>
+          <li><a href="market.html">Marketplace</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="social-links">
+        <a href="https://www.google.com/intl/en-GB/gmail/about/"><i class="fab fa-google-plus-square"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productName = params.get("product") || "Customizable paper bag";
+    const productPrice = Number(params.get("price")) || 9;
+    const productImage = params.get("img") || "resources/img/CustomprintBags_250x250_2x_1.jpg";
+
+    const productNameEl = document.getElementById("productName");
+    const productPriceEl = document.getElementById("productPrice");
+    const productImageEl = document.getElementById("productImage");
+    const quantityEl = document.getElementById("quantity");
+    const totalPriceEl = document.getElementById("totalPrice");
+
+    productNameEl.textContent = productName;
+    productPriceEl.textContent = productPrice.toFixed(0);
+    productImageEl.src = productImage;
+    productImageEl.alt = productName;
+
+    const updateTotal = () => {
+      const qty = Math.max(1, Number(quantityEl.value) || 1);
+      quantityEl.value = qty;
+      totalPriceEl.textContent = (qty * productPrice).toFixed(0);
+    };
+
+    quantityEl.addEventListener("input", updateTotal);
+    updateTotal();
+
+    const checkoutForm = document.getElementById("checkoutForm");
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrrMcKKc2FR6zlnXwOIotOUuV2f_Wcl6prwDCwCfKSX3g51r7EZ_-GWeJwU7MjfhAC/exec";
+
+    checkoutForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const note = document.getElementById("paymentNote");
+      note.textContent = "Saving your order...";
+
+      const payload = {
+        productName,
+        productPrice,
+        productImage,
+        quantity: Number(quantityEl.value) || 1,
+        totalPrice: Number(totalPriceEl.textContent) || productPrice,
+        customer: {
+          fullName: document.getElementById("fullName").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          address: document.getElementById("address").value.trim(),
+          notes: document.getElementById("notes").value.trim()
+        }
+      };
+
+      try {
+        if (APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+          throw new Error("Missing Apps Script URL");
+        }
+
+        const orderId = `ECO${Date.now()}`;
+        const formData = new URLSearchParams({
+          orderId,
+          productName,
+          productPrice: String(productPrice),
+          quantity: String(payload.quantity),
+          totalPrice: String(payload.totalPrice),
+          status: "placed",
+          customerName: payload.customer.fullName,
+          customerEmail: payload.customer.email,
+          customerPhone: payload.customer.phone,
+          customerAddress: payload.customer.address,
+          notes: payload.customer.notes || ""
+        });
+
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error("Order save failed");
+        }
+
+        const redirectUrl = new URL("/order-confirmation.html", window.location.origin);
+        redirectUrl.searchParams.set("orderId", orderId);
+        redirectUrl.searchParams.set("product", productName);
+        redirectUrl.searchParams.set("amount", totalPriceEl.textContent);
+        redirectUrl.searchParams.set("status", "success");
+        window.location.href = redirectUrl.toString();
+      } catch (error) {
+        note.textContent = "Order could not be saved. Please try again.";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+
+</html>
